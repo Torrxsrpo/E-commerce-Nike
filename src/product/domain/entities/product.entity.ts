@@ -43,6 +43,24 @@ export class Product {
     return this._variants;
   }
 
+  getVariantById(variantId: string): ProductVariant | undefined {
+    return this._variants.find((variant) => variant.id === variantId);
+  }
+
+  updateDetails(changes: { name?: string; description?: string; basePrice?: number }): void {
+    if (changes.name !== undefined) {
+      this.props.name = changes.name;
+    }
+
+    if (changes.description !== undefined) {
+      this.props.description = changes.description;
+    }
+
+    if (changes.basePrice !== undefined) {
+      this.props.basePrice = changes.basePrice;
+    }
+  }
+
   addVariant(variant: ProductVariant): void {
     const alreadyExists = this._variants.some(
       (existing) => existing.size === variant.size && existing.color === variant.color,
