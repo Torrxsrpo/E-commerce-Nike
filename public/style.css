@@ -1,0 +1,86 @@
+:root {
+  color-scheme: light dark;
+  --accent: #ff5a1f;
+  --border: #d9d9d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  line-height: 1.5;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+h1 {
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+section {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.product-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.variant-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.25rem 0;
+}
+
+button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+input,
+select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+code {
+  background: rgba(127, 127, 127, 0.15);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.order-card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.error {
+  color: #c0392b;
+}

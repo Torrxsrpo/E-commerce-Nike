@@ -72,4 +72,15 @@ export class Product {
 
     this._variants.push(variant);
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      categoryId: this.categoryId,
+      name: this.name,
+      description: this.description,
+      basePrice: this.basePrice,
+      variants: this._variants,
+    };
+  }
 }

@@ -43,4 +43,8 @@ export class CartItem {
       throw new InvalidQuantityError(quantity);
     }
   }
+
+  toJSON() {
+    return { ...this.props };
+  }
 }

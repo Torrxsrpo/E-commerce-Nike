@@ -1,15 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import type { ProductRepositoryPort } from '../../../product/domain/ports/product-repository.port.js';
+import { Inject, Injectable } from '@nestjs/common';
+import { PRODUCT_REPOSITORY, type ProductRepositoryPort } from '../../../product/domain/ports/product-repository.port.js';
 import { Order } from '../../domain/entities/order.entity.js';
-import type { OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
+import { InvalidOrderStatusTransitionError } from '../../domain/errors/invalid-order-status-transition.error.js';
+import { ORDER_REPOSITORY, type OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
 import { OrderNotFoundError } from '../errors/order-not-found.error.js';
 import { VariantNotFoundError } from '../errors/variant-not-found.error.js';
 
 @Injectable()
 export class ConfirmOrderUseCase {
   constructor(
-    private readonly orderRepository: OrderRepositoryPort,
-    private readonly productRepository: ProductRepositoryPort,
+    @Inject(ORDER_REPOSITORY) private readonly orderRepository: OrderRepositoryPort,
+    @Inject(PRODUCT_REPOSITORY) private readonly productRepository: ProductRepositoryPort,
   ) {}
 
   async execute(orderId: string): Promise<Order> {
@@ -17,6 +18,10 @@ export class ConfirmOrderUseCase {
 
     if (!order) {
       throw new OrderNotFoundError(orderId);
+    }
+
+    if (order.status !== 'PENDING') {
+      throw new InvalidOrderStatusTransitionError(order.status, 'CONFIRMED');
     }
 
     for (const item of order.items) {

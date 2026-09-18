@@ -18,4 +18,8 @@ export class Category {
   get slug(): string {
     return this.props.slug;
   }
+
+  toJSON() {
+    return { ...this.props };
+  }
 }

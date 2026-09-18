@@ -57,14 +57,32 @@ export class Order {
   }
 
   changeStatus(newStatus: OrderStatus): void {
-    if (TERMINAL_STATUSES.includes(this.props.status)) {
+    if (TERMINAL_STATUSES.includes(this.props.status) || this.props.status === newStatus) {
       throw new InvalidOrderStatusTransitionError(this.props.status, newStatus);
     }
 
-    if (newStatus === 'CONFIRMED' && this._items.length === 0) {
-      throw new EmptyOrderError();
+    if (newStatus === 'CONFIRMED') {
+      if (this.props.status !== 'PENDING') {
+        throw new InvalidOrderStatusTransitionError(this.props.status, newStatus);
+      }
+
+      if (this._items.length === 0) {
+        throw new EmptyOrderError();
+      }
     }
 
     this.props.status = newStatus;
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      contactName: this.contactName,
+      contactEmail: this.contactEmail,
+      status: this.status,
+      createdAt: this.createdAt,
+      items: this._items,
+      total: this.total,
+    };
   }
 }

@@ -20,6 +20,10 @@ export class InMemoryProductRepository implements ProductRepositoryPort {
     return this.products.find((product) => product.id === id) ?? null;
   }
 
+  async findByVariantId(variantId: string): Promise<Product | null> {
+    return this.products.find((product) => product.getVariantById(variantId) !== undefined) ?? null;
+  }
+
   async findAll(filters: ProductFilters = {}): Promise<Product[]> {
     return this.products.filter((product) => {
       const matchesCategory = !filters.categoryId || product.categoryId === filters.categoryId;

@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Order } from '../../domain/entities/order.entity.js';
-import type { OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
+import { ORDER_REPOSITORY, type OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
 import { OrderNotFoundError } from '../errors/order-not-found.error.js';
 
 @Injectable()
 export class GetOrderByIdUseCase {
-  constructor(private readonly orderRepository: OrderRepositoryPort) {}
+  constructor(@Inject(ORDER_REPOSITORY) private readonly orderRepository: OrderRepositoryPort) {}
 
   async execute(orderId: string): Promise<Order> {
     const order = await this.orderRepository.findById(orderId);

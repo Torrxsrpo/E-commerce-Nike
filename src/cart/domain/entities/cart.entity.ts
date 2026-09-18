@@ -45,4 +45,12 @@ export class Cart {
       this._items.splice(index, 1);
     }
   }
+
+  toJSON() {
+    return {
+      id: this.id,
+      createdAt: this.createdAt,
+      items: this._items,
+    };
+  }
 }

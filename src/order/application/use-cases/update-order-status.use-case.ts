@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Order, OrderStatus } from '../../domain/entities/order.entity.js';
-import type { OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
+import { ORDER_REPOSITORY, type OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
 import { OrderNotFoundError } from '../errors/order-not-found.error.js';
 
 export interface UpdateOrderStatusInput {
@@ -10,7 +10,7 @@ export interface UpdateOrderStatusInput {
 
 @Injectable()
 export class UpdateOrderStatusUseCase {
-  constructor(private readonly orderRepository: OrderRepositoryPort) {}
+  constructor(@Inject(ORDER_REPOSITORY) private readonly orderRepository: OrderRepositoryPort) {}
 
   async execute(input: UpdateOrderStatusInput): Promise<Order> {
     const order = await this.orderRepository.findById(input.orderId);

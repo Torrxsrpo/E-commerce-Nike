@@ -50,4 +50,8 @@ export class ProductVariant {
   increaseStock(quantity: number): void {
     this.props.stock += quantity;
   }
+
+  toJSON() {
+    return { ...this.props };
+  }
 }

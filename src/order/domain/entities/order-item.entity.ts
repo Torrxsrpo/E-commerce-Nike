@@ -48,4 +48,8 @@ export class OrderItem {
   get subtotal(): number {
     return this.props.quantity * this.props.unitPrice;
   }
+
+  toJSON() {
+    return { ...this.props, subtotal: this.subtotal };
+  }
 }

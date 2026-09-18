@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Product } from '../../domain/entities/product.entity.js';
 import { ProductVariant } from '../../domain/entities/product-variant.entity.js';
-import type { ProductRepositoryPort } from '../../domain/ports/product-repository.port.js';
+import { PRODUCT_REPOSITORY, type ProductRepositoryPort } from '../../domain/ports/product-repository.port.js';
 import { ProductNotFoundError } from '../errors/product-not-found.error.js';
 
 export interface AddProductVariantInput {
@@ -15,7 +15,7 @@ export interface AddProductVariantInput {
 
 @Injectable()
 export class AddProductVariantUseCase {
-  constructor(private readonly productRepository: ProductRepositoryPort) {}
+  constructor(@Inject(PRODUCT_REPOSITORY) private readonly productRepository: ProductRepositoryPort) {}
 
   async execute(input: AddProductVariantInput): Promise<Product> {
     const product = await this.productRepository.findById(input.productId);

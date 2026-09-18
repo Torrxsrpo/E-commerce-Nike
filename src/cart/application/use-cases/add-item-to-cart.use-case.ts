@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Cart } from '../../domain/entities/cart.entity.js';
 import { CartItem } from '../../domain/entities/cart-item.entity.js';
-import type { CartRepositoryPort } from '../../domain/ports/cart-repository.port.js';
+import { CART_REPOSITORY, type CartRepositoryPort } from '../../domain/ports/cart-repository.port.js';
 import { CartNotFoundError } from '../errors/cart-not-found.error.js';
 
 export interface AddItemToCartInput {
@@ -13,7 +13,7 @@ export interface AddItemToCartInput {
 
 @Injectable()
 export class AddItemToCartUseCase {
-  constructor(private readonly cartRepository: CartRepositoryPort) {}
+  constructor(@Inject(CART_REPOSITORY) private readonly cartRepository: CartRepositoryPort) {}
 
   async execute(input: AddItemToCartInput): Promise<Cart> {
     const cart = await this.cartRepository.findById(input.cartId);

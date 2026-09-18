@@ -1,0 +1,171 @@
+{
+  "info": {
+    "name": "Nike Ecommerce API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "categoryId", "value": "" },
+    { "key": "productId", "value": "" },
+    { "key": "variantId", "value": "" },
+    { "key": "cartId", "value": "" },
+    { "key": "cartItemId", "value": "" },
+    { "key": "orderId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/categories",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Running\",\n  \"slug\": \"running\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List categories",
+          "request": { "method": "GET", "url": "{{baseUrl}}/categories" }
+        },
+        {
+          "name": "Get category by id",
+          "request": { "method": "GET", "url": "{{baseUrl}}/categories/{{categoryId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Create product",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/products",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": \"{{categoryId}}\",\n  \"name\": \"Air Max 90\",\n  \"description\": \"Classic Nike sneaker with visible Air cushioning.\",\n  \"basePrice\": 149.99\n}"
+            }
+          }
+        },
+        {
+          "name": "List products",
+          "request": { "method": "GET", "url": "{{baseUrl}}/products" }
+        },
+        {
+          "name": "List products (filter by category/search)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/products?categoryId={{categoryId}}&search=air" }
+        },
+        {
+          "name": "Get product by id",
+          "request": { "method": "GET", "url": "{{baseUrl}}/products/{{productId}}" }
+        },
+        {
+          "name": "Update product",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/products/{{productId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"basePrice\": 159.99\n}" }
+          }
+        },
+        {
+          "name": "Add variant",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/products/{{productId}}/variants",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"size\": \"42\",\n  \"color\": \"black\",\n  \"sku\": \"AM90-42-BLK\",\n  \"stock\": 10\n}"
+            }
+          }
+        },
+        {
+          "name": "Update variant stock",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/products/{{productId}}/variants/{{variantId}}/stock",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 5,\n  \"operation\": \"increase\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Create cart",
+          "request": { "method": "POST", "url": "{{baseUrl}}/carts" }
+        },
+        {
+          "name": "Get cart",
+          "request": { "method": "GET", "url": "{{baseUrl}}/carts/{{cartId}}" }
+        },
+        {
+          "name": "Add item to cart",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/carts/{{cartId}}/items",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"variantId\": \"{{variantId}}\",\n  \"quantity\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Remove item from cart",
+          "request": { "method": "DELETE", "url": "{{baseUrl}}/carts/{{cartId}}/items/{{cartItemId}}" }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Checkout",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/orders/checkout",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cartId\": \"{{cartId}}\",\n  \"contactName\": \"Jane Doe\",\n  \"contactEmail\": \"jane.doe@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List orders",
+          "request": { "method": "GET", "url": "{{baseUrl}}/orders" }
+        },
+        {
+          "name": "Get order by id",
+          "request": { "method": "GET", "url": "{{baseUrl}}/orders/{{orderId}}" }
+        },
+        {
+          "name": "Confirm order (decreases stock)",
+          "request": { "method": "PATCH", "url": "{{baseUrl}}/orders/{{orderId}}/confirm" }
+        },
+        {
+          "name": "Update order status (cancel/deliver)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/orders/{{orderId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"DELIVERED\"\n}" }
+          }
+        }
+      ]
+    }
+  ]
+}

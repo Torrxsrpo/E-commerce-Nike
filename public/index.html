@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nike Ecommerce — Demo</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Nike Ecommerce (demo)</h1>
+      <p>Frontend mínimo para probar la API sin Postman. Swagger disponible en <a href="/docs">/docs</a>.</p>
+    </header>
+
+    <main>
+      <section id="cart-section">
+        <h2>Mi carrito</h2>
+        <p>
+          Cart ID: <code id="cart-id">(ninguno)</code>
+          <button id="new-cart-btn">Crear carrito nuevo</button>
+        </p>
+        <ul id="cart-items"></ul>
+        <p>Total estimado: <strong id="cart-total">$0.00</strong></p>
+        <form id="checkout-form">
+          <h3>Checkout</h3>
+          <input type="text" id="contact-name" placeholder="Nombre" required />
+          <input type="email" id="contact-email" placeholder="Email" required />
+          <button type="submit">Confirmar pedido</button>
+        </form>
+        <p id="checkout-result"></p>
+      </section>
+
+      <section id="catalog-section">
+        <h2>Catálogo</h2>
+        <div id="category-tools">
+          <input type="text" id="category-name" placeholder="Nombre categoría" />
+          <input type="text" id="category-slug" placeholder="slug" />
+          <button id="create-category-btn">Crear categoría</button>
+        </div>
+        <select id="category-select">
+          <option value="">Todas las categorías</option>
+        </select>
+        <button id="refresh-products-btn">Refrescar</button>
+
+        <details id="new-product-form">
+          <summary>Crear producto</summary>
+          <input type="text" id="product-name" placeholder="Nombre" />
+          <input type="text" id="product-description" placeholder="Descripción" />
+          <input type="number" id="product-price" placeholder="Precio base" step="0.01" />
+          <button id="create-product-btn">Crear producto</button>
+        </details>
+
+        <div id="product-list"></div>
+      </section>
+
+      <section id="orders-section">
+        <h2>Órdenes</h2>
+        <button id="refresh-orders-btn">Refrescar órdenes</button>
+        <div id="order-list"></div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

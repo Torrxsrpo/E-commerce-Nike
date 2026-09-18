@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
-import { Injectable } from '@nestjs/common';
-import type { CartRepositoryPort } from '../../../cart/domain/ports/cart-repository.port.js';
-import type { ProductRepositoryPort } from '../../../product/domain/ports/product-repository.port.js';
+import { Inject, Injectable } from '@nestjs/common';
+import { CART_REPOSITORY, type CartRepositoryPort } from '../../../cart/domain/ports/cart-repository.port.js';
+import { PRODUCT_REPOSITORY, type ProductRepositoryPort } from '../../../product/domain/ports/product-repository.port.js';
 import { Order } from '../../domain/entities/order.entity.js';
 import { OrderItem } from '../../domain/entities/order-item.entity.js';
-import type { OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
+import { ORDER_REPOSITORY, type OrderRepositoryPort } from '../../domain/ports/order-repository.port.js';
 import { CartNotFoundError } from '../errors/cart-not-found.error.js';
 import { EmptyCartError } from '../errors/empty-cart.error.js';
 import { VariantNotFoundError } from '../errors/variant-not-found.error.js';
@@ -18,9 +18,9 @@ export interface CheckoutInput {
 @Injectable()
 export class CheckoutUseCase {
   constructor(
-    private readonly cartRepository: CartRepositoryPort,
-    private readonly productRepository: ProductRepositoryPort,
-    private readonly orderRepository: OrderRepositoryPort,
+    @Inject(CART_REPOSITORY) private readonly cartRepository: CartRepositoryPort,
+    @Inject(PRODUCT_REPOSITORY) private readonly productRepository: ProductRepositoryPort,
+    @Inject(ORDER_REPOSITORY) private readonly orderRepository: OrderRepositoryPort,
   ) {}
 
   async execute(input: CheckoutInput): Promise<Order> {
